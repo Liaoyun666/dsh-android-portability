@@ -1,0 +1,5 @@
+# 本插件自己也会被自己扫（CI 里跑 `node tools/cli.js .`）。
+# 下面这些文件里的「Windows 路径 / %VAR% / powershell / x64 / .node」是规则定义和测试样本，
+# 是拿来抓别人的字面量，不是运行时真的会那么干，所以排除掉。
+lib/rules.js
+tests/

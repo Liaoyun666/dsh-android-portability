@@ -1,0 +1,68 @@
+{
+  "name": "dsh-android-portability",
+  "version": "1.0.0",
+  "description": "静态体检一个 DSH 插件能不能在 DSHA 安卓端（Linux arm64 + glibc，proot 容器）跑起来：Windows 绝对路径、%APPDATA%、x64 二进制、需要编译的原生依赖、写死的 /bin/bash。Static portability audit for DeepSeek Harness plugins targeting Android.",
+  "type": "module",
+  "main": "lib/index.js",
+  "bin": {
+    "dsh-android-portability": "tools/cli.js"
+  },
+  "files": [
+    "lib",
+    "tools",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test tests/rules.test.js tests/scan.test.js tests/report.test.js tests/cli.test.js",
+    "check": "node tools/check-manifest.js",
+    "scan:self": "node tools/cli.js .",
+    "scan:rules": "node tools/cli.js --list-rules"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsha",
+    "android",
+    "arm64",
+    "portability",
+    "lint"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "dshhub": {
+      "schemaVersion": 1,
+      "displayName": "安卓可移植性体检",
+      "summary": "发布前扫一遍：这个插件装到 DSHA 手机上会不会直接跑不起来。只读源码，17 条规则，每条给文件:行和改法。",
+      "categories": [
+        "开发工具",
+        "质量检查"
+      ],
+      "surfaces": [
+        "tool"
+      ],
+      "capabilities": {
+        "provides": [
+          "工具：dsh_check_android_portability",
+          "工具：dsh_scan_profile_android"
+        ],
+        "reads": [
+          "插件目录下的 package.json 与源码文本（只读，不执行）"
+        ],
+        "network": []
+      },
+      "compatibility": {
+        "dsh": ">=0.1.5-rc.1",
+        "node": ">=20"
+      }
+    }
+  }
+}
